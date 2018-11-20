@@ -4,10 +4,27 @@ const { map, filter, switchMap } = require('rxjs/operators');
 
 const axios = require('axios');
 
-const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
-const jquery = require('jquery')
+const Crawler = require('crawler')
 
+const requestData = uri => {
+  const crawler = new Crawler()
+  return Observable.create(observer => {
+    crawler.queue({
+      uri: uri,
+      callback: function(error, res, done) {
+        if(error){
+          observer.error(error);
+        }else{
+          observer.next(res.$);
+          observer.complete();
+        }
+        done();
+      }
+    })
+  })
+}
+
+/*
 const getHtml = url => {
   return from(axios.get(url))
     .pipe(
@@ -23,4 +40,10 @@ getHtml('https://www.amazon.com')
     const a = $('div');
     console.log(a);
     console.log(html)
+  }})
+*/
+
+requestData('https://www.amazon.com')
+  .subscribe({next: $ => {
+    console.log($('a').length);
   }})
