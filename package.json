@@ -1,0 +1,19 @@
+{
+  "name": "amz-tool",
+  "version": "0.0.1",
+  "description": "amazon product select",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/13thang08/amz-tool.git"
+  },
+  "author": "thangvm91@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/13thang08/amz-tool/issues"
+  },
+  "homepage": "https://github.com/13thang08/amz-tool#readme"
+}
