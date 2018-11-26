@@ -1,42 +1,27 @@
 module.exports = {
-  BEST_SELLERS: ["Posizione nella classifica Bestseller di Amazon"],
+  BEST_SELLERS: ["Best Sellers Rank", "Amazon Best Sellers Rank", "Amazon Bestsellers Rank"],
   DETAILS:
   {
-    DIMENSION: "Dimensioni prodotto",
-    SHIPPING_WEIGHT: "Peso di spedizione",
-    ITEM_WEIGHT: ["Peso articolo", "Peso"],
-    DATE_FIRST_AVAILABLE: "disponibile su amazon.it a partire dal",
-    NO: "n.",
+    DIMENSION: "Product Dimensions",
+    SHIPPING_WEIGHT: "Shipping Weight",
+    ITEM_WEIGHT: "Item Weight",
+    DATE_FIRST_AVAILABLE: "date first available",
+    NO: "#",
     IN: "in"
   },
   SELLER:
   {
-    AMZ: /Venduto e spedito da Amazon/i,
-    FBA: /spedito da Amazon/i
+    AMZ: /sold by amazon/i,
+    FBA: /fulfilled by amazon/i
   },
-  MONEY: /[\d.]+,[\d]{2}/,
+  MONEY: /[\d,]+\.[\d]{2}/,
   WORD: /\w+/,
   toNumber: function toNumber(e)
   {
-    return Number(e.replace(/\./g, "").replace(",", "."))
+    return Number(e.replace(/,/g, ""))
   },
   parseDate: function parseDate(e)
   {
-    var t = {
-      gennaio: "January",
-      febbraio: "February",
-      marzo: "March",
-      aprile: "April",
-      maggio: "May",
-      giugno: "June",
-      luglio: "July",
-      agosto: "August",
-      settembre: "September",
-      ottobre: "October",
-      novembre: "November",
-      dicembre: "December"
-    };
-    for (var n in t) e = e.replace(n, t[n]);
     return Date.parse(e)
   }
 }
