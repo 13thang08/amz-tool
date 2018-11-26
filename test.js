@@ -1,6 +1,11 @@
-const Symbol = require('es6-symbol');
+const cheerio = require('cheerio');
+const fs = require('fs');
 
-var arr = ["1", "2"];
 
-var f = arr[Symbol.iterator]()
-console.log(f.next());
+const html = fs.readFileSync('./sample.html', 'utf8');
+
+const $ = cheerio.load(html)
+
+const a = $('body').find('#div1').find('> div')
+console.log(a.length)
+a.map( row => console.log(a.eq(row).attr('id')));
