@@ -4,7 +4,7 @@ const jsdom = require('jsdom');
 const {JSDOM} = jsdom;
 const jquery = require('jquery');
 
-const utils = require('./utils');
+const W = require('./utils');
 const q = require('./const');
 
 const html = fs.readFileSync('input.html', 'utf8');
@@ -39,7 +39,7 @@ function getBrand($) {
     let href = (element.is('a') ? element: element.find('a')).attr('href');
 
     let text = element.text().trim();
-    return text ? text : utils.safe(() => {
+    return text ? text : W.utils.safe(() => {
         return decodeURIComponent(href.match(/^\/([^/]+)\//)[1]);
     });
 }
@@ -48,7 +48,7 @@ function getReviews($) {
     let reviewIds = ["#acrCustomerReviewText", "#revF a.a-link-emphasis"];
     return getNumber($, reviewIds, /[\d.,]+/, 0, function (e)
     {
-        return utils.toNumber(e)
+        return W.utils.toNumber(e)
     }) || 0
 }
 
@@ -82,7 +82,7 @@ function extractMoney(e)
 function getRating($)
 {
     var t = $("#acrPopover").attr("title");
-    return t ? utils.toNumber(t.match(/\d[.,]\d/)[0]) : null
+    return t ? W.utils.toNumber(t.match(/\d[.,]\d/)[0]) : null
 }
 
 function getSeller(e)
@@ -104,7 +104,7 @@ function getSellersCount(e)
     }) : 1)
 }
 
-const asin = utils.getASIN(url);
+const asin = W.utils.getASIN(url);
 
 const nameIds = ["#productTitle", "#btAsinTitle", "#aiv-content-title", "#title_feature_div", "#ebooksProductTitle"];
 const name = findFirst($, nameIds).text().trim();
@@ -127,3 +127,5 @@ const result = {
     seller,
     sellerCount
 }
+
+console.log(result);

@@ -1,4 +1,4 @@
-module.exports = new function ()
+module.exports.utils = new function ()
 {
   var a, i = this;
   this.debounce = function (r, i, o)
