@@ -14,6 +14,23 @@ const dom = new JSDOM(html);
 const $ = jquery(dom.window);
 // const $ = cheerio.load(html);
 
+var G = ["#productDescription img", "#aplus3p_feature_div", "#aplus"],
+r = ["#fitRecommendationsSection|attr:data-asin", "#twisterNonJsData input[name=ASIN]|val"],
+J = ["#twisterJsInitializer_feature_div script"],
+// $ = ["#brand", "span.author a.contributorNameID", "span.author a:first", "#bylineInfo_feature_div a:first", ".buying a:first", "#brandBylineWrapper a"],
+X = ["#variation_color_name ul li", "#variation_color_name .a-dropdown-container select option"],
+K = ["#variation_size_name option.dropdownAvailable"],
+Z = ["#acrCustomerReviewText", "#revF a.a-link-emphasis"],
+Y = ["#productTitle", "#btAsinTitle", "#aiv-content-title", "#title_feature_div", "#ebooksProductTitle"],
+Q = ["#priceblock_ourprice", "#priceblock_saleprice", "#tmmSwatches .a-color-price", "#mediaTabs_tabSet .mediaTab_subtitle", "span.a-color-price.a-text-bold:last", "#actualPriceValue", "#priceblock_ourprice", "#priceblock_dealprice", "#priceblock_saleprice", "#priceBlock .priceLarge", "#buyNewSection .a-color-price.offer-price", "#olp_feature_div .a-color-price", "#price-quantity-container .a-color-price", ".kindle-price .a-color-price:first", "#tmmSwatches .swatchElement .a-size-base:first"],
+ee = ["#mbc .a-size-small .a-color-price", "#unqualified .a-color-price", "#olp_feature_div .a-color-price", "#olp_feature_div .a-spacing-top-small a"],
+te = ["#olp_feature_div a", "#mbc .a-size-small a"],
+ne = ["#main-image", "#landingImage", ".dp-img-bracket img", "#imgBlkFront", "#ebooks-img-canvas img", "#fine-art-imgTagWrapperId img"],
+re = ["#wayfinding-breadcrumbs_feature_div li:first", "#nav-subnav a.nav-b"],
+l = "\nvar ProductDescriptionIframeResize = {};",
+f = 'var iframeContent = "',
+ie = ["#zeitgeistBadge_feature_div .badge-wrapper"]
+
 function findFirst($, ids, regex) {
     for (let i = 0; i < ids.length; i++) {
         let elements = $(ids[i]);
@@ -104,6 +121,61 @@ function getSellersCount(e)
     }) : 1)
 }
 
+function getMoney(e, t)
+{
+    return getNumber(e, t, q.MONEY)
+}
+
+function getNumber(e, t)
+{
+    var n = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : /[\d,.]+/,
+        r = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : 0,
+        i = 4 < arguments.length && void 0 !== arguments[4] ? arguments[4] : function (e)
+        {
+            return q.toNumber(e)
+        },
+        o = function getText(e, t, n)
+        {
+            return findFirst(e, t, n).text().trim()
+        }(e, t, n);
+    return extractMoney(o, n, r, i)
+}
+
+function extractMoney(e)
+{
+    var t = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : /[\d,.]+/,
+        n = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : 0,
+        r = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : function (e)
+        {
+            return q.toNumber(e)
+        },
+        i = e && e.match(t);
+    return i && i.length > n ? r(i[n]) : null
+}
+
+function trimString(e)
+{
+    return "string" != typeof e ? e : e.replace(/\s+/g, " ").trim()
+}
+
+function getProperties(e)
+{
+    return e("script[type=a-state]").toArray().map(function (e)
+    {
+        return JSON.parse(e.innerHTML)
+    })
+}
+
+function getPrice(e)
+{
+    // TODO: need fix price
+    let Q = ["#priceblock_ourprice", "#priceblock_saleprice", "#tmmSwatches .a-color-price", "#mediaTabs_tabSet .mediaTab_subtitle", "span.a-color-price.a-text-bold:last", "#actualPriceValue", "#priceblock_ourprice", "#priceblock_dealprice", "#priceblock_saleprice", "#priceBlock .priceLarge", "#buyNewSection .a-color-price.offer-price", "#olp_feature_div .a-color-price", "#price-quantity-container .a-color-price", ".kindle-price .a-color-price:first", "#tmmSwatches .swatchElement .a-size-base:first"];
+    let price = getMoney(e, Q)
+    return price
+}
+
+console.log(getMoney($, Q));
+
 const asin = W.utils.getASIN(url);
 
 const nameIds = ["#productTitle", "#btAsinTitle", "#aiv-content-title", "#title_feature_div", "#ebooksProductTitle"];
@@ -118,6 +190,8 @@ const seller = getSeller($);
 
 const sellerCount = getSellersCount($);
 
+const price = getPrice($);
+
 const result = {
     asin,
     name,
@@ -125,7 +199,8 @@ const result = {
     reviewsCount,
     rating,
     seller,
-    sellerCount
+    sellerCount,
+    price
 }
 
 console.log(result);

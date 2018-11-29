@@ -71,3 +71,31 @@
       "https://images-na.ssl-images-amazon.com/images/I/51tRcfoztPL._SL300_.jpg"
     ]
   }
+
+
+  {
+OK    "name": "Baby Alive Potty Dance Baby: Talking Baby Doll with Blonde Hair, Potty, Rewards Chart, Undies and More, Doll That “Pees” on Her Potty, for Girls and Boys 3 Years Old And Up",
+OK    "brand": "Baby Alive",
+OK    "sellersCount": 16,
+    "rank": 133,
+OK    "price": 36.97,
+    // FBA Fees
+    // Net margin
+    // Est. Sales
+    // Est. Revenue
+OK    "reviewsCount": 28,
+    // RPR
+OK   "rating": 4.2,
+    "lqs": 71,
+    // Available from
+OK    "seller": "AMZ"
+  }
+
+  const result = {
+    asin,
+    name,
+    brand,
+    reviewsCount,
+    rating,
+    seller
+}
