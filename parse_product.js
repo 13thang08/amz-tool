@@ -174,7 +174,51 @@ function getPrice(e)
     return price
 }
 
-console.log(getMoney($, Q));
+function getDescription(e)
+{
+    var t, n = e("#productDescription");
+    if (n.length)
+    {
+        var r = n.find(".content");
+        t = (r.length ? r : n).text().replace(/\s+/g, " ").trim()
+    }
+    return t
+}
+
+function getListingQualityCriteria(e, t, n, r, i, o)
+{
+    var a = {};
+    a.nameLength = t ? t.length : 0, a.brandLength = n ? n.length : 0;
+    var s = e("#feature-bullets li:not(#replacementPartsFitmentBullet)");
+    a.bulletsCount = s.length, a.rating = i || 0, a.reviews = o || 0, a.seller = r;
+    var u = getDescription(e) || function getScriptedDescription(e)
+    {
+        var r, i, t;
+        if (e("script").each(function (e, t)
+            {
+                var n = t.innerHTML;
+                return n.startsWith(l) && (i = n.indexOf(f), r = n), null == i
+            }), r)
+        {
+            i += f.length;
+            var n = r.indexOf('"', i),
+                o = r.substring(i, n),
+                a = (0, U.default)(decodeURIComponent(o));
+            t = getDescription(a)
+        }
+        return t
+    }(e);
+    a.descrLength = u ? u.length : 0;
+    var c = e("#altImages li:not(.template)");
+    return a.imagesCount = c.length, a
+}
+
+function getListingQualityScore(e)
+{
+    var t = 0;
+    t += e.nameLength < 200 ? 10 : e.nameLength / 20, t += e.brandLength <= 100 ? 10 : e.brandLength / 10, t += 5 <= e.bulletsCount ? 15 : 0, t += 4 <= e.rating ? 20 * e.rating - 80 : 0, t += Math.min(e.reviews, 15), "FBA" == e.seller && (t += 10);
+    return t += 1e3 <= e.descrLength ? 10 : e.descrLength / 100, t += 5 < e.imagesCount ? 10 : 10 * e.imagesCount / 5, Math.floor(t)
+}
 
 const asin = W.utils.getASIN(url);
 
@@ -192,6 +236,9 @@ const sellerCount = getSellersCount($);
 
 const price = getPrice($);
 
+const listingQualityCriteria = getListingQualityCriteria($, name, brand, seller, rating, reviewsCount);
+const lqs = getListingQualityScore(listingQualityCriteria);
+
 const result = {
     asin,
     name,
@@ -200,7 +247,8 @@ const result = {
     rating,
     seller,
     sellerCount,
-    price
+    price,
+    lqs
 }
 
 console.log(result);
