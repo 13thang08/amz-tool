@@ -86,16 +86,7 @@ OK    "price": 36.97,
 OK    "reviewsCount": 28,
     // RPR
 OK   "rating": 4.2,
-    "lqs": 71,
+OK    "lqs": 71,
     // Available from
 OK    "seller": "AMZ"
   }
-
-  const result = {
-    asin,
-    name,
-    brand,
-    reviewsCount,
-    rating,
-    seller
-}
