@@ -220,6 +220,55 @@ function getListingQualityScore(e)
     return t += 1e3 <= e.descrLength ? 10 : e.descrLength / 100, t += 5 < e.imagesCount ? 10 : 10 * e.imagesCount / 5, Math.floor(t)
 }
 
+function parseInternal(e, t, n, i)
+{
+    var o = this,
+        r = e.find(t);
+    if (r.length)
+    {
+        var a, s = {};
+        return r.find(n).each(function (e, t)
+        {
+            var n = (0, u.default)(t);
+            c.clean(n);
+            var r = n.find(i).first();
+            r.length ? (a = r.text().trim().replace(":", ""), r.remove(), s[a] = o.value(n)) : a && (s[a] += o.value(n))
+        }), s
+    }
+}
+
+function parseV1(e) {
+    // return parseInternal(e, "#detail-bullets", ".content>ul>li", "b")
+    return parseInternal(e, "#detailBullets", "#detailBullets_feature_div>ul>li, #dpx-amazon-sales-rank_feature_div>li, #SalesRank", "b:first, span.a-text-bold")
+}
+
+function ParserV2() {
+    this.value = function value(e)
+    {
+        return e && e.length ? this.normalize(e.get(0).innerText) : null
+    }
+
+    this.normalize = function normalize(e)
+    {
+        return e ? e.trim().replace(/\([^)]+\)/gi, "").replace(/[\s\u00A0]+/g, " ") : e
+    }
+
+    this.parse = function parse(e)
+    {
+        var r = this,
+            t = e("#productDetails_detailBullets_sections1 tr, #productDetails_techSpec_section_1 tr");
+        if (t.length)
+        {
+            var i, o, a = {};
+            return t.each(function (e, t)
+            {
+                var n = (0, u.default)(t);
+                c.clean(n), i = r.value(n.find("th")), o = r.value(n.find("td")), a[i] = o
+            }), a
+        }
+    }
+}
+
 const asin = W.utils.getASIN(url);
 
 const nameIds = ["#productTitle", "#btAsinTitle", "#aiv-content-title", "#title_feature_div", "#ebooksProductTitle"];
@@ -251,4 +300,7 @@ const result = {
     lqs
 }
 
-console.log(result);
+// console.log(result);
+let parserV2 = new ParserV2();
+let tmp = parserV2.parse($)
+console.log(tmp);
