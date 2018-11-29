@@ -14,19 +14,6 @@ const dom = new JSDOM(html);
 const $ = jquery(dom.window);
 // const $ = cheerio.load(html);
 
-const asin = utils.getASIN(url);
-
-const nameIds = ["#productTitle", "#btAsinTitle", "#aiv-content-title", "#title_feature_div", "#ebooksProductTitle"];
-const name = findFirst($, nameIds).text().trim();
-const brand = getBrand($);
-
-const reviewsCount = getReviews($);
-
-const rating = getRating($);
-
-const seller = getSeller($);
-console.log(seller);
-
 function findFirst($, ids, regex) {
     for (let i = 0; i < ids.length; i++) {
         let elements = $(ids[i]);
@@ -107,11 +94,36 @@ function getSeller(e)
     return t
 }
 
+function getSellersCount(e)
+{
+    let te = ["#olp_feature_div a", "#mbc .a-size-small a"];
+    var t = findFirst(e, te).text().match(/\d+/);
+    return Number(t && t.length ? t.reduce(function (e, t)
+    {
+        return e + t
+    }) : 1)
+}
+
+const asin = utils.getASIN(url);
+
+const nameIds = ["#productTitle", "#btAsinTitle", "#aiv-content-title", "#title_feature_div", "#ebooksProductTitle"];
+const name = findFirst($, nameIds).text().trim();
+const brand = getBrand($);
+
+const reviewsCount = getReviews($);
+
+const rating = getRating($);
+
+const seller = getSeller($);
+
+const sellerCount = getSellersCount($);
+
 const result = {
     asin,
     name,
     brand,
     reviewsCount,
     rating,
-    seller
+    seller,
+    sellerCount
 }
