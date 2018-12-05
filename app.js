@@ -16,9 +16,7 @@ const utils = require('./utils');
 const q = require('./const');
 
 const requestData = uri => {
-  const crawler = new Crawler({
-    jQuery: jsdom
-  });
+  const crawler = new Crawler({ jquery: jsdom });
   return Observable.create(observer => {
     crawler.queue({
       uri: uri,
@@ -41,6 +39,8 @@ const requestData = uri => {
           //   return 1 < r ? b.uniqueSort(n) : n
           // }   
           observer.next(res.body);
+          console.log('thang');
+          console.log(res.$('title').html());
           // observer.next(cheerio.load(res.body));
           observer.complete();
         }
