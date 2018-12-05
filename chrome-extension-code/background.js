@@ -1,45 +1,7 @@
-! function (n)
-{
-	var r = {};
+const fetch = require("node-fetch");
+const URL = require('url').URL;
 
-	function __webpack_require__(e)
-	{
-		if (r[e]) return r[e].exports;
-		var t = r[e] = {
-			i: e,
-			l: !1,
-			exports:
-			{}
-		};
-		return n[e].call(t.exports, t, t.exports, __webpack_require__), t.l = !0, t.exports
-	}
-	__webpack_require__.m = n, __webpack_require__.c = r, __webpack_require__.i = function (e)
-	{
-		return e
-	}, __webpack_require__.d = function (e, t, n)
-	{
-		__webpack_require__.o(e, t) || Object.defineProperty(e, t,
-		{
-			configurable: !1,
-			enumerable: !0,
-			get: n
-		})
-	}, __webpack_require__.n = function (e)
-	{
-		var t = e && e.__esModule ? function getDefault()
-		{
-			return e.default
-		} : function getModuleExports()
-		{
-			return e
-		};
-		return __webpack_require__.d(t, "a", t), t
-	}, __webpack_require__.o = function (e, t)
-	{
-		return Object.prototype.hasOwnProperty.call(e, t)
-	}, __webpack_require__.p = "", __webpack_require__(__webpack_require__.s = 422)
-}(
-{
+module.exports = {
 	1: function (e, t, n)
 	{
 		"use strict";
@@ -3110,7 +3072,7 @@
 					key: "value",
 					value: function value(e)
 					{
-						return e && e.length ? AbstractDetailParser.normalize(e.get(0).innerText) : null
+						return e && e.length ? AbstractDetailParser.normalize(e.get(0).textContent) : null
 					}
 				}], [
 				{
@@ -4178,7 +4140,7 @@
 						var t = e.find("#feature-bullets li:not(#replacementPartsFitmentBullet)");
 						return t ? t.toArray().map(function (e)
 						{
-							return e.innerText.trim()
+							return e.textContent.trim()
 						}) : []
 					}(r),
 					P = getListingQualityCriteria(r, o, s, f, l, c),
@@ -5094,7 +5056,7 @@
 							var t = e.querySelector("#cm_cr-review_list"),
 								n = t && t.querySelectorAll(".review"),
 								r = n && n.length && n[n.length - 1],
-								i = r && r.querySelector(".review-date").innerText;
+								i = r && r.querySelector(".review-date").textContent;
 							return i && s.parseDate(i)
 						})
 					})
@@ -5150,7 +5112,7 @@
 						{
 							var t = e.querySelector(".olpSecondaryPage .olpSellerName a");
 							if (null !== t)
-								if (-1 === t.innerText.trim().toLowerCase().indexOf("amazon"))
+								if (-1 === t.textContent.trim().toLowerCase().indexOf("amazon"))
 								{
 									var n = t.getAttribute("href");
 									if (n)
@@ -6022,7 +5984,7 @@
 								return t = t.replace(Q, ee),
 									function (e)
 									{
-										return -1 < (e.textContent || e.innerText || o(e)).indexOf(t)
+										return -1 < (e.textContent || e.textContent || o(e)).indexOf(t)
 									}
 							}),
 							lang: markFunction(function (n)
@@ -8533,6 +8495,15 @@
 					default: e
 				}
 			}(n(50));
+
+		var signer = function _interopRequireDefault(e)
+		{
+			return e && e.__esModule ? e :
+			{
+				default: e
+			}
+		}(n(1060))
+
 		var l = "application/json",
 			f = "Content-Type",
 			d = {
@@ -8565,6 +8536,14 @@
 					u = d[r];
 				i = u(i)
 			}
+
+			let xInstanceID = "exyXC_QiB6Q";
+			var pathname = new URL(e).pathname;
+			var sign = (0, signer.default)(xInstanceID + pathname);
+			a["Cookie"] = "cid=1205181;";
+			a["X-Instance-ID"] = xInstanceID;
+			a["X-Signature"] = sign
+
 			return a["X-Origin"] = "SCOUT_EXT_PRO", new Promise(function (n, r)
 			{
 				fetch(e,
@@ -8912,4 +8891,4 @@
 		});
 		t.TOP_BRANDS = ["samsung", "apple", "sony", "nestle", "panasonic", "lg", "nike", "chanel", "adidas", "coca-cola", "gucci", "canon", "google", "johnson & johnson", "lotte", "toshiba", "philips", "meiji", "sony play station", "microsoft", "sharp", "facebook", "calvin klein", "hewlett-packard", "l'oreal", "honda", "dove", "hitachi", "shiseido", "christian dior", "cadbury", "armani", "maggi", "nivea", "amazon", "yamaha", "nintendo", "nescafe", "colgate", "yahoo", "mentos", "louis vuitton", "watsons", "mitsubishi motors", "shell", "pampers", "lipton", "rolex", "dell", "haagen-dazs", "huggies", "quaker", "bridgestone", "pedigree", "heineken", "olay", "lancome", "toyota", "prada", "burberry", "microsoft", "estee lauder", "bmw", "michelin", "epson", "kellogg's", "lenovo", "nissin", "sk-ii", "tiffany & co.", "johnnie walker", "panadol", "kao", "nikon", "ralph lauren", "intel", "bvlgari", "morinaga", "pringles", "lazada", "cartier", "milo", "pocari sweat", "pepsi", "doublemint", "asus", "heinz", "acer", "sanyo", "daikin", "pond's men", "suntory", "zara", "mamy poko", "del monte", "tropicana", "uni-president", "casio", "pioneer", "lay's", "minute maid", "bose", "whirlpool", "lux", "red bull", "amul", "gatorade", "evian", "goodyear", "mercedes-benz", "dumex", "siemens", "reebok", "cerelac", "tesco", "carrefour", "hugo boss", "levi's", "electrolux", "puma", "whiskas", "pantene", "ferrero rocher", "dunlop", "sensodyne", "apollo", "hennessy", "aeon", "swarovski", "head & shoulders", "sprite", "100 plus", "oral b", "ibm", "instagram", "gillette", "dutch lady", "h&m", "mead johnson", "clinique", "garnier", "haier", "chivas", "baskin robbins", "mentholatum", "hush puppies", "sunkist", "uniqlo", "wyeth", "wrigley's arrow", "fujitsu", "maybelline", "guess", "vaseline", "ntuc fairprice", "kenwood", "guardian", "magnolia", "carlsberg", "orion", "jack daniel", "nongshim", "wall's", "calbee", "huawei", "biore", "ariel", "seiko", "clarks", "darlie", "hershey", "tylenol", "lion", "giant", "xiaomi", "sunsilk", "attack", "dettol", "neutrogena", "harley davidson", "caltex", "hermes", "breeze", "friskies", "budweiser", "extra", "closeup", "big bazaar", "timberland", "boots", "bata", "line", "royal canin", "sugus", "decolgen", "suzuki", "tide", "gatsby", "wikipedia", "chupa chups", "twinings", "godiva", "bosch", "walmart", "7-up", "esso", "yves saint laurent", "yokohama", "anlene", "clear", "kawasaki", "surf", "crocodile", "lifebuoy", "namyang", "omo", "indomie", "naver", "woolworths", "jvc", "audi", "the body shop", "jimmy choo", "alpo", "nestum", "aquarius", "zalora", "jack'n jill", "schweppes", "tiger beer", "purina", "palmolive", "carrier", "asahi", "perrier", "marigold", "fanta", "masterkong", "fitbit", "dynamo", "brother", "cesar", "nokia", "guinness", "tag heuer", "rolls royce", "abc", "mac", "san miguel", "aquafina", "haitai", "ducati", "rakuten", "remy martin", "ferrari", "big c", "revlon", "giordano", "avon", "coles", "powerade", "maeil", "boss", "halls", "lacoste", "twisties", "pepsodent", "lindt", "f&n", "singtel", "vidal sassoon", "biotherm", "gerber", "toblerone", "fisher & paykel", "fernleaf", "ajinomoto", "old town white coffee", "matsumoto kiyoshi", "m&m's", "pokka", "wei chuan", "yahoo shopping", "meiji", "rejoice", "petron", "porsche", "olympus", "martell", "pigeon", "dove", "g2000", "google home", "fuji xerox", "ballantine's", "new balance", "sega", "smirnoff", "big babol", "hyundai (motors)", "telstra", "mercury drug", "royal", "australian football league", "china mobile", "versace", "mobil", "bear brand", "shokubutsu", "samyang", "donna karen (dkny)", "chilsung cider", "salvatore ferragamo", "mama", "mister potato", "sapporo", "cj cheil jedang", "my dog", "mango (mng)", "nine west", "tsingtao", "fruit tree", "nestle dairy farm", "petronas", "mr.muscle", "kingfisher", "s 26", "vodafone", "charles & keith", "safeguard", "arnott's", "rinso", "ben & jerry's", "chunghwa telecom (cht)", "patek philippe", "alaska", "citizen", "continental", "hankook", "nippon professional baseball", "dentyne", "foremost", "adobe", "dairy milk", "tissot", "gs caltex", "lucky me", "indian premier league", "summit", "airwaves", "seoul milk", "hill's", "e mart", "drypers", "nissan", "pertamina", "tipco", "beat", "swatch", "baidu", "xerox", "peel fresh", "ice mountain", "merries", "spritzer", "axe", "royce' / royce", "ministop", "care pet", "ford", "swensen's", "scholl", "takeda", "bacardi", "shinramyun", "westinghouse", "linkedin", "ais", "tresemme", "wilkins", "telkomsel", "lactogen", "bang & olufsen (b&o)", "priceline", "dairy farmers", "flipkart", "nurofen", "absolut", "coco pops", "maxwell house", "danone", "hypermart", "honey star (nestle)", "indofood", "mr. juicy", "dairy queen", "circle k", "sulwhasoo", "lakme", "chemist warehouse", "pirelli", "minere", "ricoh", "chungjungwon", "taiwan beer", "chow tai fook", "kumho", "softbank", "kirin", "mei ri c", "national rugby league", "qoo10", "sk (jewellery)", "volvic", "sponsor", "mcdowell's", "cpc (china)", "moccona", "yum yum", "la vie", "glico", "eukanuba", "starhub", "golden mountain", "bubble yum", "sina", "myojo", "top", "horlicks", "dilmah", "cold stone", "cpc (taiwan)", "cosmed", "ptt", "daily juice", "garmin", "white rabbit", "trident", "sm supermarket", "doggyman", "dtac", "samsung pay", "bally", "kymco", "top ramen", "babylove", "kumkang", "kissan", "sariwangi", "groupon", "mazda", "bangchak", "viettel", "dolce & gabbana (d&g)", "poh kong", "aura", "elizabeth arden", "sosro", "y.e.s mineral water", "sym", "selecta", "kimia farma", "chiclet", "petrolimex", "malee", "kodak", "airtel", "vinamilk", "bing", "moutai", "gs 25", "masterfood", "red horse", "jusco", "habib jewels", "nespray", "campina", "nongfu shan quan", "koikeya", "hao hao", "qq", "ito-en", "post", "applepay", "manning's", "pxmart", "tanishq", "linux", "blue moon", "gree", "coach", "mr. brown", "mie sedap", "ucc", "asics", "daphne", "longines", "taj mahal (tea)", "goon", "esprit", "lawson", "kapal api", "chin-su", "htc", "maxis", "ades", "golden circle", "aldi", "hero honda", "ntt", "snow brand", "british petroleum (bp)", "me-o", "arrow", "volkswagen", "enfa", "kuang-chuan", "advance info service (ais)", "van houten", "indian oil corporation (iocl)", "berri", "regency", "mirinda", "center fresh", "china mengniu dairy", "frisian flag", "northface", "bisleri", "haldiram", "nippon oil corporation (noc", "jim beam", "hui yuan", "ranbaxy", "amway", "compaq", "formosa petrochemical", "daum", "cu", "lexus", "chow sang sang", "kagome", "smiths", "amazon payments", "wantwant", "msn", "wei lih", "fossil group, inc", "the generics pharmacy", "park n shop", "fuji", "alfamart", "boryung pharmacist", "norton", "indosat", "wai wai", "clairol herbal essences", "mobifone", "harry winston", "fab", "boh", "dreyer's", "firestone", "michael hill", "hai tian", "oksusu tea", "tata tea", "pro sweat", "kaspersky", "moony", "kopiko", "yili", "homeplus", "oracle", "kose", "kwality", "ktf", "tang", "protex", "nec", "perioe", "cold storage", "mount franklin", "allen's", "esquire", "onnuri", "kimball", "barista lavazza (india)", "pro plan", "indomaret", "kinley", "timex", "unity pharmacy", "rado", "truemove", "columbia", "c.c. lemon", "mamee", "maruchan", "mother dairy", "hacks", "volvo", "raymond", "chang beer", "frooti", "wuliangye", "mizuno", "wanjashan", "aso", "unicharm", "amore pacific", "bharat petroleum corporation limited (bpcl)", "birdy", "uncle toby", "belle", "wakodo", "11st.co", "fair & lovely", "singha", "xu fu ji", "vita", "benq", "toyo tire", "supermie", "costco", "cha li won", "it", "caring pharmacy", "crest", "kimlan", "sanitarium", "ghana", "m-sport", "titan", "nikka", "sk", "kanebo", "robinson's", "digi", "mandom", "sunstar", "buick regal", "top man / top shop", "gopro", "eskinol", "max factor", "extra joss", "kenzo", "anna sui", "optus", "woodland", "maidong", "heaven & earth", "gmarket", "j.d", "hipp", "m-150", "eq", "silverstone", "hl", "saewookkang", "reliance (ril)", "natural confectionary company", "fantastic", "boomer", "kewpie", "k-24", "valve steam machine", "kelvinator", "kinmen kao liang", "csl/chinese super league", "nutri grain", "amoy", "york", "peters", "idemitsu", "bonaqua", "miwon", "happy bath", "puregold", "applesidra", "nexen tire", "streets", "uha mikakuto", "paos", "p/s", "florsheim", "fountain", "21st century healthcare", "hoe garden", "d-mart", "shoppers stop", "nhl / national hockey league", "revive isotonic", "weet-bix", "leo", "iriver", "kowloon dairy", "midea", "auction.co", "lucozade", "pauls", "jk tyre", "caring", "3", "amcal", "piaggio", "moto 360", "mydin", "wacoal", "lao feng xiang", "datu puti", "real", "pet pet", "parle", "playjam estick", "aekyung 2080", "klim", "hubba bubba", "gum", "dentiste", "snugglers", "devondale", "superbubble", "tata", "iga", "capico", "amazon echo", "ceat", "asience", "ochaen", "greenmax", "blue girl", "sugi", "p.c. chandra", "taster's choice", "creative", "voltas", "lao bai xin", "super coffee mix", "liby", "pears", "wahaha", "farex", "swipe", "motorola", "hindustan", "morewater", "bajaj", "jianlibao", "clinic", "aquafresh", "pal", "bonia", "shanghaojia", "iams", "simpson", "teco", "kia motors", "chum", "bosomi", "csl", "m1", "otsuka seiyaku", "amazon.com", "apple", "google", "samsung", "facebook", "at&t", "microsoft", "verizon", "walmart", "icbc", "alibaba", "china mobile", "wells fargo", "mercedes-benz", "toyota", "bmw", "state grid", "ntt group", "tencent", "t (deutsche telekom)", "shell", "chase", "huawei", "agricultural bank of china", "the home depot", "volkswagen", "disney", "ibm", "starbucks", "ge", "petrochina", "citi", "marlboro", "coca-cola", "oracle", "nike", "xfinity", "youtube", "mitsubishi", "china state construction", "mcdonald's", "ikea", "sinopec", "wechat", "pwc", "orange", "honda", "intel", "ups", "siemens", "moutai", "baidu", "total", "deloitte", "visa", " cvs", "allianz", "pepsi", "boeing", "jd.com", "bp", "cisco", "nissan", "nestlé", "bosch", "porsche", "h&m", "softbank", "vodafone", "united healthcare", "hsbc", "fedex", "chevron", "hyundai", "johnson's", "jp morgan", "zara", "ford", "ey", "sap", "fox", "accenture", "lg group", "uber", "au", "dell", "evergrande real estate", "santander", "walgreens", "american express", "audi", "nbc", "wuliangye", "mufg", "adidas", "tata", "lowe's", "rbc", "hitachi group", "bnp paribas", "target", "spectrum", "sk group", "exxonmobil", "axa", "chevrolet", "td", "kpmg", "telstra", "costco", "renault", "universal", "sony", "land rover", "country garden", "bbva", "petronas", "bt", "movistar", "hermès", "bell", "dhl", "carrefour", "eni", "louis vuitton", "cbs", "abc", "netflix", "aia", "crec", "scotiabank", "canon", "warner bros.", "sky", "anthem", "tesco", "edf", "cartier", "ing", "l'oréal", "aetna", "goldman sachs", "aldi", "danone", "panasonic", "johnson & johnson", "humana inc", "lexus", "philips", "ubs", "hp", "cpic", "delta", "tim", "o2", "enel", "gucci", "lidl", "mitsui group", "optumhealth", "nokia", "engie", "pemex", "lockheed martin", "anz", "abb", "adobe", "statoil", "ebay", "metlife", "uniqlo", "subway", "subaru", "kfc", "itaú", "michelin", "medtronic", "rogers", "union pacific", "nintendo", "tsmc", "morgan stanley", "yanghe", "cognizant", "etisalat", "telus", "allstate", "red bull", "lego", "gillette", "sam's club", "sprint", "basf", "bud light", "3 mobile", "yahoo", "picc", "zurich", "vinci", "woolworths group", "china vanke", "cibc", "valero", "budweiser", "centurylink", "honeywell", "united", "bridgestone", "midea", "cigna", "sumitomo mitsui financial group", "telenor", "qualcomm", "haval", "brookfield", "credit suisse", "airtel", "stc", "crrc", "neutrogena", "coles", "geico", "dow", "ferrari", "publix", "dbs", "natwest", "schlumberger", "generali", "fresenius", "nivea", "roche", "asda", "lloyds", "prudential(us)", "pnc", "rolex", "nordea", "pampers", "hilton", "activision blizzard", "coach", "marubeni", "victoria's secret", "yili", "heineken", "claro", "infosys", "dxc technology", "pall mall", "l&m", "geely", "lic", "playstation", "camel", "t.j. maxx", "chanel", "daiwa house industry", "westpac", "sfr", "mcc", "crédit agricole", "purina", "mizuho", "bouygues (conglomerate)", "rabobank", "tesla motors", "travelers", "tyson", "standard chartered", "bbc", "bradesco", "bayer", "newport", "poly real estate", "kellogg's", "sainsbury's", "aig", "enterprise", "saint gobain", "espn", "emirates airlines", "nescafé", "guerlain", "southwest", "thomson reuters", "kt", "mobil", "cnooc", "caterpillar", "kroger", "hynix", "petrobras", "bhp", "chubb", "20th century fox", "clinique", "korea electric power corporation", "pantene", "tim hortons", "mckinsey", "chow tai fook", "huggies", "aviva", "gatorade", "ptt", "sysco", "macy's", "kraft", "colgate", "lukoil", "dove", "domino's pizza", "poste italiane", "randstad", "wrigley's", "enbridge", "haier", "continental", "thermo fisher scientific", "longfor properties", "esso", "schneider electric", "exxon", "tiffany & co.", "ee", "garnier", "e leclerc", "general dynamics", "fubon life", "progressive", "adp", "kia motors", "conocophillips", "kb financial group", "john deere", "burberry", "hcl technologies", "toshiba", "swiss re", "ericsson", "capgemini", "cccc", "discover", "northrop grumman", "china cinda-h", "sodexo", "texas instruments", "prudential(uk)", "estée lauder", "cnrl", "electronic arts (ea)", "sprite", "cn", "suning", "wolseley", "lotte group", "unilever", "hikvision", "denso", "sherwin-williams", "nationwide building society", "safran", "crédit mutuel", "johnnie walker", "suzuki", "deutsche post", "nordstrom", "linkedin", "express scripts", "hbo", "qnb", "kbc", "indian oil", "clarins", "shiseido", "kohl's", "emerson", "banco do brasil", "doosan (group)", "el corte ingles", "cummins", "autozone", "pfizer", "fis", "lenovo", "innogy", "cj group", "china southern airlines", "repsol", "micron technology", "reliance industries", "christian dior", "carmax", "maybelline", "gree", "csx", "fujitsu", "bloomberg", "polo ralph lauren", "xiaomi", "aflac", "optus", "sun hung kai properties", "gs group", "nvidia", "isuzu", "atos", "cathay life insurance co", "larsen & toubro", "ecopetrol", "china res land", "munich re", "iberdrola", "rolls-royce", "heinz", "s-26", "prada", "bdo international", "winston", "royal caribbean cruises", "luzhou laojiao", "china eastern airlines", "whole foods", "centene corporation", "marks & spencer", "applied materials", "zalando", "under armour", "abn amro", "uob", "adecco", "mccain foods", "cerner corp", "vmware", "sabic", "la poste", "brahma", "daikin", "glencore", "acuvue", "abbott", "bae systems", "raytheon", "blackrock"]
 	}
-});
+};
