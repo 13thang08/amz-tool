@@ -49,13 +49,6 @@ function parseData(url, response) {
   });
 }
 
-function getEstSales(n, asin, domain, ranks)
-{
-  let c = n(6);
-  let promise = (0, c.ajax)("https://amzscout.net/extensions/scoutpro/v1/products/" + domain + "/" + asin + "/sales", "POST", ranks);
-  return from(promise);
-}
-
 function getSalesHistory(n, asin, domain, ranks)
 {
   let c = n(6);
@@ -70,36 +63,46 @@ function getProductDimensions(n, asin, domain)
   return from(promise)
 }
 
+function getProductScore(e)
+{
+  if (e && e.marginImpact && e.rpr && e.lqs && e.reviewsCount)
+  {
+    return Math.round((function marginScore(e)
+    {
+      return r.utils.minmax(0, 20, .8 * (e - 50))
+    }(e.marginImpact) + function rprScore(e)
+    {
+      return r.utils.minmax(0, 20, .2 * (e - 50))
+    }(e.rpr) + function lqsScore(e)
+    {
+      return r.utils.minmax(0, 10, 10 + -.25 * (e - 50))
+    }(e.lqs) + function reviewsScore(e)
+    {
+      return r.utils.minmax(0, 20, 20 + -.1 * (e - 100))
+    }(e.reviewsCount)) / 7)
+  }
+}
+
 module.exports = function(url) {
   return requestData(url).pipe(
     map(response => {
       return { url: url, response };
     }),
     flatMap(obj => parseData(obj.url, obj.response)),
-    /*
     flatMap(x => {
       let n = x.n;
-      let productDetail = x.productDetail;
-      return getEstSales(n, productDetail.asin, productDetail.domain, productDetail.ranks)
+      let r = n(6);
+      let N = x.productDetail;
+      return getSalesHistory(n, N.asin, N.domain, N.ranks)
         .pipe(
-          map(salesHistory => {
+          map(e => {
+            N.bsr30 = e.bsr30, N.price30 = e.price30 ? e.price30 / 100 : void 0, N.estSales = e.value, N.estRevenue = r.utils.safe(function ()
+            {
+              return e.value * N.price
+            }), N.rpr = N.estRevenue && N.reviewsCount ? N.estRevenue / N.reviewsCount : null, N.rankHistory = e.rankHistory, N.salesHistory = e.salesHistory, N.priceHistory = e.priceHistory, N.score = getProductScore(N)
             return {
               n,
-              productDetail: Object.assign(productDetail, salesHistory)
-            }
-          })
-        )
-    }),
-    */
-    flatMap(x => {
-      let n = x.n;
-      let productDetail = x.productDetail;
-      return getSalesHistory(n, productDetail.asin, productDetail.domain, productDetail.ranks)
-        .pipe(
-          map(salesHistory => {
-            return {
-              n,
-              productDetail: Object.assign(productDetail, salesHistory)
+              productDetail: N
             }
           })
         )
@@ -109,10 +112,10 @@ module.exports = function(url) {
       let productDetail = x.productDetail;
       return getProductDimensions(n, productDetail.asin, productDetail.domain)
         .pipe(
-          map(salesHistory => {
+          map(productDimensions => {
             return {
               n,
-              productDetail: Object.assign(productDetail, salesHistory)
+              productDetail: Object.assign(productDetail, productDimensions)
             }
           })
         )
